@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ControlIO Version="v1.0.0">
+  <Properties SyncReset="true" CycleTime="10" />
+  <Diagram DiagramPosition="-514,0" DiagramScale="1">
+    <NodeData Key="2" Location="-385 120" NodeType="InputBit" MemMapAddress="1" NodeDescription="Sensor" />
+    <NodeData Key="3" Location="-180 120" NodeType="OutputBit" MemMapAddress="0" NodeDescription="Conveyor" />
+    <LinkData From="2" To="3" FromPort="Out-Bit-0" ToPort="In-Bit-0" NodeType="LinkData" />
+  </Diagram>
+</ControlIO>
