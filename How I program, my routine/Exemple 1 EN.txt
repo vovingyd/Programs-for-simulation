@@ -12,7 +12,7 @@ when pressing the reset button
 	raise griper until upper reed switch 2 is on
 	lower the cylinder until bottom reed switch 1 is on
 	
-shouldn't work
+should be off
 	upper reed switch 1
 	lower reed switch 2
 	3 parts presence sensors
@@ -33,20 +33,20 @@ turn conveyor on
 These are the questions I ask myself when programming a station
 What happens if:
 	the conveyor stops working or 1 of the part presence sensors does not work?
-		if the part presence sensor does not work for more than 5 seconds
+		if the part presence sensor does is off for more than 5 seconds
 			display an error message
 			skip to program part *Station stop
-	the pressure on the cylinder disappears, which means that the lower reed switch 1 will stop working?
+	the pressure on the cylinder disappears, which means that the lower reed switch 1 will be off?
 		display an error message
 		skip to program part *Station stop
-	will the pressure on the gripper disappear, which means that the upper reed switch 2 will stop working?
+	will the pressure on the gripper disappear, which means that the upper reed switch 2 will be off?
 		display an error message
 		skip to program part *Station stop
 
 when 3 sensors for the presence of a part are triggered
 	stop conveyor
 	lower the griper to the lower reed switch 2
-		if the lower reed switch 2 does not work for more than 2 seconds
+		if the lower reed switch 2 is off for more than 2 seconds
 			display an error message
 			skip to program part *Station stop
 
@@ -56,19 +56,19 @@ when the lower reed switch 2 is activated
 			display an error message
 			skip to program part *Station stop
 
-the hand drove up to the station and grabbed 3 parts (since the hand has its own cycle of work, its errors are registered in its own cycle)
+the hand drove up to the station and grabbed 3 parts (since the hand has its own automated cycle, its errors are registered in its own cycle)
 	raise the griper to the top reed switch 2
-		if the upper reed switch 2 does not work for more than 2 seconds
+		if the upper reed switch 2 is off for more than 2 seconds
 			display an error message
 			skip to program part *Station stop
 
-the hand has moved away from the station (since the hand has its own work cycle, its errors are registered in its own cycle)
+the hand has moved away from the station (since the hand has its own automated cycle, its errors are registered in its own cycle)
 	lower the cylinder to the lower reed switch 1
-		if the lower reed switch 1 does not work for more than 2 seconds
+		if the lower reed switch 1 is off for more than 2 seconds
 			display an error message
 			skip to program part *Station stop
 
-lower reed switch 1 worked
+lower reed switch 1 is on
 
 *End of cycle
 	go to *Start loop
