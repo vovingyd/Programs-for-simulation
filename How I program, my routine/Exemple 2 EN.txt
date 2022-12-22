@@ -1,0 +1,101 @@
+This is an example of my thoughts when I program a station.
+This station taken is from this video https://youtu.be/o5LcnERibTA?t=117
+
+I presume that different stations communicate by availability bits, thus linking all of the simple processes in one automated machine
+
+Sensors:
+Gripper right reed switch	-	Grip_Open
+Gripper left reed switch	-	Grip_Closed
+CylinderX right reed switch	-	CylX_R
+CylinderX left reed switch	-	CylX_L
+CylinderY upper reed switch	-	CylY_U
+CylinderY down reed switch	-	CylY_D
+
+Contactors:
+Gripper	- ON/OFF - open/close
+CylinderX - ON/OFF - extend/retract
+CylinderY - ON/OFF - lower/raise
+
+*System interruptions
+when pressing buttons stop or emergency stop
+	skip to program part *Station stop
+*end of the system interrupts
+
+*Initial conditions
+stop lamp is ON
+when pressing the reset button
+	release gripper so Grip_Open is ON and Grip_Closed is OFF
+	raise CylinderY so CylY_U is ON and CylY_D is OFF
+	retract CylinderX so CylX_L is ON and CylX_R is OFF
+		If these conditions are not met within 3 seconds
+			display an error message
+			skip to program part *Station stop
+
+when start button is pressed
+	start lamp turns ON
+	stop lamp turns OFF
+	go to program part *Start of cycle
+
+*Start of cycle
+
+Extend CylinderX so CylX_R is ON and CylX_L is OFF
+	if CylX_R is OFF for more than 2 seconds
+	Or if any other than CylX_R and CylX_L sensors have changed their state //This prevents diagonal movement e.g. if CylY_U turns off while CylinderX is moving
+		display an error message
+		skip to program part *Station stop
+
+Wait until availability bit from magazine station is ON
+
+IF Grip_OPEN is ON and Grip_Closed is OFF
+	lower CylinderY so CylY_D is ON and CylY_U is OFF
+		if CylY_D is OFF for more than 2 seconds
+		Or if any other than CylY_D and CylY_U sensors have changed their state
+			display an error message
+			skip to program part *Station stop
+
+Close Gripper so Grip_Closed is ON and Grip_Open is OFF
+	if Grip_Closed is OFF for more than 2 seconds
+		display an error message
+		skip to program part *Station stop
+
+Raise CylinderY so CylY_U is ON and CylY_D is OFF
+	if CylY_U is OFF for more than 2 seconds
+	Or if any other than CylY_D and CylY_U sensors have changed their state
+		display an error message
+		skip to program part *Station stop
+
+Retract CylinderX so CylX_R is ON and CylX_L is OFF
+	if CylX_R is OFF for more than 2 seconds
+	Or if any other than CylX_R and CylX_L sensors have changed their state
+		display an error message
+		skip to program part *Station stop
+
+When until availability bit from rotation table is ON
+
+Lower CylinderY so CylY_D is ON and CylY_U is OFF
+	if CylY_D is OFF for more than 2 seconds
+	Or if any other than CylY_D and CylY_U sensors have changed their state
+		display an error message
+		skip to program part *Station stop
+
+Release Gripper so Grip_Open is ON and Grip_Closed is OFF
+	if Grip_Open is OFF for more than 2 seconds
+		display an error message
+		skip to program part *Station stop
+
+Raise CylinderY so CylY_U is ON and CylY_D is OFF
+	if CylY_U is OFF for more than 2 seconds
+	Or if any other than CylY_D and CylY_U sensors have changed their state
+		display an error message
+		skip to program part *Station stop
+
+*End of cycle
+	go to *Start loop
+
+*Station stop
+	turn OFF all drives
+	turn OFF the start lamp
+	turn ON stop lamp
+	go to program part *Initial conditions
+
+
