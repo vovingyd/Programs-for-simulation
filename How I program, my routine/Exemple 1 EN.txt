@@ -71,7 +71,7 @@ the hand has moved away from the station (since the hand has its own automated c
 lower reed switch 1 is on
 
 *End of cycle
-	go to *Start loop
+	go to *Start of cycle
 
 *Station stop
 	turn off all drives
