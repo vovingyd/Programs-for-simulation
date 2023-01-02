@@ -19,3 +19,25 @@ contains my Python programs.
 
 • TIA Portal - 
 contains my TIA Portal programs.
+
+# Portfolio automatyki
+To portfolio składa się z moich programów do automatyzacji różnych scenariuszy w ustawieniach fabrycznych z wykorzystaniem fabrycznych symulacji we/wy i rzeczywistych stacji.
+
+• Sterowanie we/wy -
+zawiera przykłady mojego kodu control-io opartego na węzłach, a także obrazy samego kodu.
+
+
+• Ekrany HMI -
+zawiera generowane przez AI ekrany HMI, z których może korzystać klient.
+
+
+• Jak programuję, moja rutyna —
+zawiera przykłady mojej rutyny programistycznej, w tym szczegóły mojego podejścia i najlepszych praktyk.
+
+
+• Python-
+zawiera moje programy w Pythonie.
+
+
+• Portal TIA —
+zawiera moje programy TIA Portal.
