@@ -1,0 +1,91 @@
+To jest przykład mojego procesu programowania, gdybym programował stację wziętą z tego filmu https://youtu.be/tUfQV0gRKYA?t=52
+
+
+*Przerwania systemowe
+podczas naciskania przycisków stop lub emergency stop
+	przejdź do części programu *Station stop
+*koniec przerwań systemu
+
+
+*Warunki początkowe
+lampa stop włączona
+podczas naciskania przycisku reset
+	wyłącz taśmociąg
+	podnieśc zacisk aż do górnego kontaktronu 2 jest włączony
+	obniż cylinder aż do dolnego kontaktronu 1 jest włączony
+
+powinny być wyłączone
+	górny kontaktron 1
+	dolny kontaktron 2
+	czujniki obecności elementów
+
+Jeśli poprzednie warunki nie są spełnione
+	wyświetl komunikat błędu
+	przejdź do części programu *Station stop
+
+podczas naciśnięcia przycisku start
+	wyłącz lampa stop
+	włącz lampa start
+	przejdź do części programu *Początek cyklu
+
+
+*Początek cyklu
+
+włącz taśmociąg
+
+Oto pytania, które sobie zadaję podczas programowania stacji:
+Co się stanie, jeśli:
+	taśmociąg przestanie działać lub jeden z czujników obecności elementów nie będzie działać?
+	jeśli czujnik obecności elementu jest wyłączony przez ponad 5 sekund
+		wyświetl komunikat błędu
+		przejdź do części programu *Station stop
+	ciśnienie na cylindrze zniknie, co oznacza, że dolny kontaktron 1 będzie wyłączony?
+		wyświetl komunikat błędu
+		przejdź do części programu *Station stop
+	ciśnienie na zacisku zniknie, co oznacza, że górny kontaktron 2 będzie wyłączony?
+		wyświetl komunikat błędu
+		przejdź do części programu *Station stop
+
+gdy aktywowany 3 czujniki obecności elementu
+	zatrzymaj taśmociąg
+	obniż zacisk do dolnego kontaktronu 2
+		jeśli dolny kontaktron 2 jest wyłączony przez ponad 2 sekundy
+			wyświetl komunikat błędu
+			przejdź do części programu *Station stop
+
+gdy dolny kontaktron 2 jest aktywowany
+	podnieśc cylinder do górnego kontaktronu 1
+		jeśli górny kontaktron 1 jest wyłączony przez ponad 2 sekundy
+			wyświetl komunikat błędu
+			przejdź do części programu *Station stop
+
+ręka podjechała do stacji
+ręka wziąła wszystkie 3 elementy (ponieważ ręka ma własny zautomatyzowany cykl, jej błędy są rejestrowane w swoim własnym cyklu)
+	podnieś Zacisk do górnego kontaktronu 2
+	jeśli górny kontaktronu 2 jest wyłączony przez ponad 2 sekundy
+		wyświetl komunikat błędu
+		przejdź do części programu *Station stop
+
+ręka odsunęła się od stacji (ponieważ ręka ma własny zautomatyzowany cykl, jej błędy są rejestrowane w swoim własnym cyklu)
+	Jeśli co najmniej jeden czujnik obecności elementu jest aktywny
+		wyświetl komunikat błędu
+		przejdź do części programu *Station stop
+
+obniż cylinder do dolnego kontaktronu 1
+	jeśli dolny kontaktron 1 jest wyłączony przez ponad 2 sekundy
+		wyświetl komunikat błędu
+		przejdź do części programu *Station stop
+
+dolny kontaktron 1 jest włączony
+
+*Koniec cyklu
+
+przejdź do *Początek cyklu
+
+*Station stop
+wyłącz wszystkie siłowniki
+wyłącz lampę start
+włącz lampę stop
+przejdź do części programu *Warunki początkowe
+
+
