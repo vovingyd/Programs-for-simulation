@@ -1,0 +1,332 @@
+; (c) 2009-2010   Siemens AG
+; Profibus-DP     Device Description File for SINAMICS G120C DP
+;
+; Firmware Version:      V04.40.24.00
+;=====================================================================================
+;
+#Profibus_DP
+OrderNumber         = "6SL3 210-1KExx-xxP0"
+
+;--- general ---
+GSD_Revision        = 5
+Vendor_Name         = "Siemens AG"
+Model_Name          = "SINAMICS G120C DP(F) V4.4"
+Info_Text           = "DP slave SINAMICS G120C with DP-V2 interface (cyclic, non-cyclic, slave-to-slave communications, PROFIsafe)"
+Revision            = "A"
+Ident_Number        = 0x818b
+Protocol_Ident      = 0
+Station_Type        = 0
+FMS_supp            = 0
+Hardware_Release    = "A"
+Software_Release    = "V4.4"
+;
+9.6_supp            = 1
+19.2_supp           = 1
+45.45_supp          = 1
+93.75_supp          = 1
+187.5_supp          = 1
+500_supp            = 1
+1.5M_supp           = 1
+3M_supp             = 1
+6M_supp             = 1
+12M_supp            = 1
+;
+MaxTsdr_9.6         = 15
+MaxTsdr_19.2        = 15
+MaxTsdr_45.45       = 15
+MaxTsdr_93.75       = 15
+MaxTsdr_187.5       = 15
+MaxTsdr_500         = 15
+MaxTsdr_1.5M        = 25
+MaxTsdr_3M          = 50
+MaxTsdr_6M          = 100
+MaxTsdr_12M         = 200
+;
+Redundancy          = 0
+Repeater_Ctrl_Sig   = 2
+24V_Pins            = 0
+;
+Implementation_Type = "DPC31"
+Bitmap_Device       = "si818b_n"
+;Bitmap_Diag         = ""
+;Bitmap_SF           = ""
+;
+;--- slave basic ---
+Freeze_Mode_supp    = 1
+Sync_Mode_supp      = 1
+Auto_Baud_supp      = 1
+Set_Slave_Add_supp  = 0
+Min_Slave_Intervall = 1
+Modular_Station     = 1
+Max_Module          = 6  ; safety, pkw, tel, sic, 2*dxb
+Max_Input_Len       = 30 ; 6 safety(tel30) + 8 pkw + 16 pzd
+Max_Output_Len      = 30
+Max_Data_Len        = 60
+Fail_Safe           = 1
+Max_Diag_Data_Len   = 48
+Modul_Offset        = 1
+Slave_Family        = 1@SINAMICS
+
+;--- GSD R3 slave extensions ---
+DPV1_Slave              = 1
+C1_Read_Write_supp      = 1
+C2_Read_Write_supp      = 1
+C1_Max_Data_Len         = 240
+C2_Max_Data_Len         = 240
+C1_Response_Timeout     = 100
+C2_Response_Timeout     = 100
+C1_Read_Write_required  = 0
+C2_Read_Write_required  = 0
+C2_Max_Count_Channels   = 3
+Max_Initiate_PDU_Length = 52
+DPV1_Data_Types         = 0
+WD_Base_1ms_supp        = 1
+Check_Cfg_Mode          = 0
+Publisher_supp          = 1
+
+;--- GSD R4 slave extensions ---
+Prm_Block_Structure_supp = 1
+Prm_Block_Structure_req  = 0
+
+;--- GSD R5 slave extensions ---
+PrmCmd_supp = 1
+Slave_Redundancy_supp = 1   ;for Y-Link
+Ident_Maintenance_supp = 1
+
+;--- Subscriber ---
+Subscriber_supp          = 1
+DXB_Max_Link_Count       = 4
+DXB_Max_Data_Length      = 16
+DXB_Subscribertable_Block_Location = 0
+
+
+;--- UsrPrmData Definitions ----------------------------------------
+Max_User_Prm_Data_Len      = 115
+Ext_User_Prm_Data_Const(0) = 0x00, 0x00, 0x00
+
+
+;==================================================================
+;---  Modules ---
+; text32 "01234567890123456789012345678901"
+
+; Telegramme ohne Achstrenner (Einachser)
+
+Module = "PKW channel 4 words" 0xF3
+990
+Info_Text = "PKW channel 4 words, insert before PZD"
+EndModule
+
+Module = "Standard telegram 1, PZD-2/2" 0xC3,0xC1,0xC1,0xFD,0x00,0x01
+1
+Info_Text = "Standard telegram 1: Closed-loop speed control, PZD length 2/2 words"
+EndModule
+
+Module = "Standard telegram 20, PZD-2/6" 0xC3,0xC1,0xC5,0xFD,0x00,0x14
+20
+Info_Text = "Standard  telegram 20: Closed-loop speed control, process industry, NAMUR, PZD length 2/6 words"
+EndModule
+
+Module = "SIEMENS telegram 352, PZD-6/6" 0xC3,0xC5,0xC5,0xFD,0x01,0x60
+352
+Info_Text = "SIEMENS telegram 352: Closed-loop speed control, PCS7, PZD length 6/6 words"
+EndModule
+
+Module = "SIEMENS telegr 353, PKW+PZD-2/2" 0xF3, 0xC3,0xC1,0xC1,0xFD,0x01,0x61
+353
+Info_Text = "SIEMENS telegram 353: Closed-loop speed control, PZD length 2/2 words with PKW channel 4 words"
+EndModule
+
+Module = "SIEMENS telegr 354, PKW+PZD-6/6" 0xF3, 0xC3,0xC5,0xC5,0xFD,0x01,0x62
+354
+Info_Text = "SIEMENS telegram 354: Closed-loop speed control, PCS7, PZD length 6/6 words with PKW channel 4 words"
+EndModule
+
+Module = "Free telegram, PZD-8/8" 0xC3,0xC7,0xC7,0xFD,0x00,0x00
+997
+Info_Text = "Free telegram, PZD length 8/8 words"
+EndModule
+
+;--- subscriber modules ---
+
+Module = "Slave-to-slave, PZD-1" 0x81,0xC0,0xF9
+2001
+Info_Text = "Slave-to-slave, receiving, PZD length 1 word"
+Data_Area_Beg
+; text32    "01234567890123456789012345678901"
+Area_Name = "Slave-to-slave"
+Related_Cfg_Identifier = 1
+IO_Direction = 1 ;out
+Length = 2 ;byte
+Consistency = 1
+Publisher_allowed = 1
+DP_Master_allowed = 0
+Data_Type = 6 ;u16
+Data_Area_End
+EndModule
+
+Module = "Slave-to-slave, PZD-2" 0x81,0xC1,0xF9
+2002
+Info_Text = "Slave-to-slave, receiving, PZD length 2 words"
+Data_Area_Beg
+Area_Name = "Slave-to-slave"
+Related_Cfg_Identifier = 1
+IO_Direction = 1 ;out
+Length = 4 ;byte
+Consistency = 1
+Publisher_allowed = 1
+DP_Master_allowed = 0
+Data_Type = 6 ;u16
+Data_Type = 6 ;u16
+Data_Area_End
+EndModule
+
+Module = "Slave-to-slave, PZD-4" 0x81,0xC3,0xF9
+2004
+Info_Text = "Slave-to-slave, receiving, PZD length 4 words"
+Data_Area_Beg
+Area_Name = "Slave-to-slave"
+Related_Cfg_Identifier = 1
+IO_Direction = 1 ;out
+Length = 8 ;byte
+Consistency = 1
+Publisher_allowed = 1
+DP_Master_allowed = 0
+Data_Type = 6 ;u16
+Data_Type = 6 ;u16
+Data_Type = 6 ;u16
+Data_Type = 6 ;u16
+Data_Area_End
+EndModule
+
+;----------------------------------------------------------------------------------
+;--- PROFIsafe ---
+
+PrmText = 1
+Text(0) = "No Check"
+;Text(1) = "Check"
+EndPrmText
+
+PrmText =	2
+;Text(0) = "SIL 1"
+Text(1) = "SIL 2"
+;Text(2) = "SIL 3"
+;Text(3) = "NoSIL"
+EndPrmText
+
+PrmText = 3
+Text(0) = "3 Byte CRC"
+;Text(1) = "2 Byte CRC"
+;Text(2) = "4 Byte CRC"
+;Text(3) = "reserved"
+EndPrmText
+
+PrmText = 4
+;Text(0) = "ParVersion 0"
+Text(1) = "ParVersion 1"
+EndPrmText
+
+;------
+
+ExtUserPrmData = 1 "F_Check_SeqNr"		; reference number 1
+Bit(0) 0 0-0							; default = 0, range 0-0
+Prm_Text_Ref = 1						; reference to text definition 1
+EndExtUserPrmData
+
+ExtUserPrmData = 2 "F_SIL"
+BitArea(2-3) 1 1-1
+Prm_Text_Ref = 2
+EndExtUserPrmData
+
+ExtUserPrmData = 3 "F_CRC_Length"
+BitArea(4-5) 0 0-0
+Prm_Text_Ref = 3
+EndExtUserPrmData
+
+ExtUserPrmData = 4 "F_Par_Version"
+BitArea(6-7) 1 1-1
+Prm_Text_Ref = 4
+EndExtUserPrmData
+
+ExtUserPrmData	 = 5 "F_Source_Add"
+Unsigned16 1 1-65534
+EndExtUserPrmData
+
+ExtUserPrmData = 6 "F_Dest_Add"
+Unsigned16 1 1-65534
+EndExtUserPrmData
+
+ExtUserPrmData = 7 "F_WD_Time"
+Unsigned16 150 1-65535  ;ms
+EndExtUserPrmData
+
+ExtUserPrmData = 8 "F_Par_CRC"
+Unsigned16 0xD6EF 0-65535
+EndExtUserPrmData
+
+ExtUserPrmData = 10 "[SlotNumber]"
+Unsigned8 1 1-254
+EndExtUserPrmData
+
+;-------
+UnitDiagType = 129
+X_Unit_Diag_Area=24-31
+X_Value(64) = "F_addr and F_target addr diff."
+X_Value(65) = "Incorrect F target address"
+X_Value(66) = "Incorrect F source address"
+X_Value(67) = "Watchdog timer value=0"
+X_Value(68) = "Incorrect SIL level"
+X_Value(69) = "Incorrect F-CRC length"
+X_Value(70) = "Incorrect F parameter version"
+X_Value(71) = "CRC1 error"
+X_Value(72) = "Inconsistent F configuration"
+X_Value(73) = "reserved"
+X_Value(74) = "reserved"
+X_Unit_Diag_Area_End
+EndUnitDiagType
+
+
+;--- PROFIsafe telegram 30 ---
+; text32 "01234567890123456789012345678901"
+Module = "PROFIsafe standard telegram 30" 0xC6,0x85,0x85,0x05,0x05,0x0a,0x05,0x05,0x0a
+30
+Info_Text = "PROFIsafe standard telegram 30: F-DI/DO length 2/2 bytes"
+
+Data_Area_Beg
+Area_Name = "PROFIsafe receiving"
+Related_Cfg_Identifier = 1
+IO_Direction = 1 ;out
+Length = 6 ;byte
+Consistency = 1
+Publisher_allowed = 1
+DP_Master_allowed = 1
+Data_Type =  5 ;u8
+Data_Type =  5 ;u8
+Data_Type =  5 ;octet-string
+Data_Type =  5 ;octet-string
+Data_Type =  5 ;octet-string
+Data_Type =  5 ;octet-string
+Data_Area_End
+
+F_Ext_Module_Prm_Data_Len = 14
+;F_Ext_User_Prm_Data_Const(0) = 0x0e, 0x05, 0x00, 0x00,  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 
+F_Ext_User_Prm_Data_Const(0) = 0xE  ;Blocklänge F-Parameter
+F_Ext_User_Prm_Data_Const(1) = 5    ;Kennung F-Parameter
+F_Ext_User_Prm_Data_Ref(2) = 10   ;Steckplatz des F-Moduls
+F_Ext_User_Prm_Data_Const(3) = 0    ;Specifier
+F_Ext_User_Prm_Data_Const(4) = 0    ;F-Param-Flag 1 default 0x14
+F_Ext_User_Prm_Data_Const(5) = 0    ;F-Param-Flag 2 default 0x00
+F_Ext_User_Prm_Data_Ref(4)  = 1	    ;F-Param 1 Bit 0  , Check Seq No
+F_Ext_User_Prm_Data_Ref(4)  = 2    ;F-Param 1 Bit 2-3, SIL 2
+F_Ext_User_Prm_Data_Ref(4)  = 3    ;F-Param 1 Bit 4-5, CRC length 3 byte
+F_Ext_User_Prm_Data_Ref(5)  = 4    ;F-Param 2 Bit 6-7, PROFIsafe v2.0
+F_Ext_User_Prm_Data_Ref(6)  = 5    ;F-Source-Adr
+F_Ext_User_Prm_Data_Ref(8)  = 6    ;F-Dest-Adr
+F_Ext_User_Prm_Data_Ref(10) = 7    ;F-WD-Time
+F_Ext_User_Prm_Data_Ref(12) = 8    ;F-CRC1
+F_ParamDescCRC=0xC13C
+F_IO_StructureDescCRC=5639
+EndModule
+
+;====================================================================================
+
+
