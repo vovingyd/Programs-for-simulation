@@ -1,1 +1,1 @@
-
+This repository contains a program for a Siemens 1200 PLC, which communicates with an INVT GD20 inverter through Modbus RTU protocol. The program demonstrates the ability to control the inverter's parameters and monitor its performance through the PLC. It also serves as a starting point for those looking to integrate similar equipment into their own automation projects.
